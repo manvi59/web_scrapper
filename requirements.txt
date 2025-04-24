@@ -2,3 +2,4 @@ streamlit
 papermill
 notebook
 ipykernel
+XlsxWriter
