@@ -29,7 +29,115 @@ def get_last_output_cell(notebook_path):
 st.title("🏡 Real Estate Scraper - Realtor.com")
 
 with st.form("user_form"):
-    location = st.text_input("Enter Location (e.g., Indiana or Los-Angeles_CA)")
+    # location = st.text_input("Enter Location (e.g., Indiana or Los-Angeles_CA)")
+    cities = [
+    { "label": "New York, NY", "value": "new-york_ny" },
+    { "label": "Los Angeles, CA", "value": "los-angeles_ca" },
+    { "label": "Chicago, IL", "value": "chicago_il" },
+    { "label": "Houston, TX", "value": "houston_tx" },
+    { "label": "Phoenix, AZ", "value": "phoenix_az" },
+    { "label": "Philadelphia, PA", "value": "philadelphia_pa" },
+    { "label": "San Antonio, TX", "value": "san-antonio_tx" },
+    { "label": "San Diego, CA", "value": "san-diego_ca" },
+    { "label": "Dallas, TX", "value": "dallas_tx" },
+    { "label": "San Jose, CA", "value": "san-jose_ca" },
+    { "label": "Austin, TX", "value": "austin_tx" },
+    { "label": "Jacksonville, FL", "value": "jacksonville_fl" },
+    { "label": "Fort Worth, TX", "value": "fort-worth_tx" },
+    { "label": "Columbus, OH", "value": "columbus_oh" },
+    { "label": "Indianapolis, IN", "value": "indianapolis_in" },
+    { "label": "Charlotte, NC", "value": "charlotte_nc" },
+    { "label": "San Francisco, CA", "value": "san-francisco_ca" },
+    { "label": "Seattle, WA", "value": "seattle_wa" },
+    { "label": "Denver, CO", "value": "denver_co" },
+    { "label": "Oklahoma City, OK", "value": "oklahoma-city_ok" },
+    { "label": "Nashville, TN", "value": "nashville_tn" },
+    { "label": "El Paso, TX", "value": "el-paso_tx" },
+    { "label": "Washington, DC", "value": "washington_dc" },
+    { "label": "Las Vegas, NV", "value": "las-vegas_nv" },
+    { "label": "Boston, MA", "value": "boston_ma" },
+    { "label": "Portland, OR", "value": "portland_or" },
+    { "label": "Detroit, MI", "value": "detroit_mi" },
+    { "label": "Memphis, TN", "value": "memphis_tn" },
+    { "label": "Louisville, KY", "value": "louisville_ky" },
+    { "label": "Baltimore, MD", "value": "baltimore_md" },
+    { "label": "Milwaukee, WI", "value": "milwaukee_wi" },
+    { "label": "Albuquerque, NM", "value": "albuquerque_nm" },
+    { "label": "Tucson, AZ", "value": "tucson_az" },
+    { "label": "Fresno, CA", "value": "fresno_ca" },
+    { "label": "Mesa, AZ", "value": "mesa_az" },
+    { "label": "Sacramento, CA", "value": "sacramento_ca" },
+    { "label": "Atlanta, GA", "value": "atlanta_ga" },
+    { "label": "Kansas City, MO", "value": "kansas-city_mo" },
+    { "label": "Colorado Springs, CO", "value": "colorado-springs_co" },
+    { "label": "Raleigh, NC", "value": "raleigh_nc" },
+    { "label": "Omaha, NE", "value": "omaha_ne" },
+    { "label": "Miami, FL", "value": "miami_fl" },
+    { "label": "Long Beach, CA", "value": "long-beach_ca" },
+    { "label": "Virginia Beach, VA", "value": "virginia-beach_va" },
+    { "label": "Oakland, CA", "value": "oakland_ca" },
+    { "label": "Minneapolis, MN", "value": "minneapolis_mn" },
+    { "label": "Tulsa, OK", "value": "tulsa_ok" },
+    { "label": "Arlington, TX", "value": "arlington_tx" },
+    { "label": "New Orleans, LA", "value": "new-orleans_la" },
+    { "label": "Wichita, KS", "value": "wichita_ks" },
+    { "label": "Cleveland, OH", "value": "cleveland_oh" },
+    { "label": "Tampa, FL", "value": "tampa_fl" },
+    { "label": "Bakersfield, CA", "value": "bakersfield_ca" },
+    { "label": "Aurora, CO", "value": "aurora_co" },
+    { "label": "Honolulu, HI", "value": "honolulu_hi" },
+    { "label": "Anaheim, CA", "value": "anaheim_ca" },
+    { "label": "Santa Ana, CA", "value": "santa-ana_ca" },
+    { "label": "Riverside, CA", "value": "riverside_ca" },
+    { "label": "Corpus Christi, TX", "value": "corpus-christi_tx" },
+    { "label": "Lexington, KY", "value": "lexington_ky" },
+    { "label": "Henderson, NV", "value": "henderson_nv" },
+    { "label": "Stockton, CA", "value": "stockton_ca" },
+    { "label": "Saint Paul, MN", "value": "saint-paul_mn" },
+    { "label": "Cincinnati, OH", "value": "cincinnati_oh" },
+    { "label": "St. Louis, MO", "value": "st-louis_mo" },
+    { "label": "Pittsburgh, PA", "value": "pittsburgh_pa" },
+    { "label": "Greensboro, NC", "value": "greensboro_nc" },
+    { "label": "Lincoln, NE", "value": "lincoln_ne" },
+    { "label": "Anchorage, AK", "value": "anchorage_ak" },
+    { "label": "Plano, TX", "value": "plano_tx" },
+    { "label": "Orlando, FL", "value": "orlando_fl" },
+    { "label": "Irvine, CA", "value": "irvine_ca" },
+    { "label": "Newark, NJ", "value": "newark_nj" },
+    { "label": "Durham, NC", "value": "durham_nc" },
+    { "label": "Chula Vista, CA", "value": "chula-vista_ca" },
+    { "label": "Toledo, OH", "value": "toledo_oh" },
+    { "label": "Fort Wayne, IN", "value": "fort-wayne_in" },
+    { "label": "St. Petersburg, FL", "value": "st-petersburg_fl" },
+    { "label": "Laredo, TX", "value": "laredo_tx" },
+    { "label": "Jersey City, NJ", "value": "jersey-city_nj" },
+    { "label": "Chandler, AZ", "value": "chandler_az" },
+    { "label": "Madison, WI", "value": "madison_wi" },
+    { "label": "Lubbock, TX", "value": "lubbock_tx" },
+    { "label": "Scottsdale, AZ", "value": "scottsdale_az" },
+    { "label": "Reno, NV", "value": "reno_nv" },
+    { "label": "Buffalo, NY", "value": "buffalo_ny" },
+    { "label": "Gilbert, AZ", "value": "gilbert_az" },
+    { "label": "Glendale, AZ", "value": "glendale_az" },
+    { "label": "North Las Vegas, NV", "value": "north-las-vegas_nv" },
+    { "label": "Winston-Salem, NC", "value": "winston-salem_nc" },
+    { "label": "Chesapeake, VA", "value": "chesapeake_va" },
+    { "label": "Norfolk, VA", "value": "norfolk_va" },
+    { "label": "Fremont, CA", "value": "fremont_ca" },
+    { "label": "Garland, TX", "value": "garland_tx" },
+    { "label": "Irving, TX", "value": "irving_tx" },
+    { "label": "Hialeah, FL", "value": "hialeah_fl" },
+    { "label": "Richmond, VA", "value": "richmond_va" },
+    { "label": "Boise, ID", "value": "boise_id" },
+    { "label": "Spokane, WA", "value": "spokane_wa" }
+    ]
+ 
+    # Convert to a dictionary for easy label-value handling
+    label_to_value = { city['label']: city['value'] for city in cities }
+
+    # Streamlit selectbox
+    selected_label = st.selectbox("Select a city", list(label_to_value.keys()))
+
     # property_type = st.text_input("Property Type (e.g., multi-family-home, condo)")
     # days = st.number_input("Days on Realtor", min_value=0, step=1)
     # price = st.number_input("Max Price", min_value=0, step=1000)
@@ -48,17 +156,35 @@ with st.form("user_form"):
     property_type_url = property_type_map[property_type]
 
     # --- Custom Price Dropdowns ---
+    # min_price_display_map = {
+    #     "No Min": None,
+    #     "$80k": "80000",
+    #     "$90k": "90000",
+    #     "$120k": "120000",
+    #     "$250k": "250000"
+    # }
+
     min_price_display_map = {
-        "No Min": None,
-        "$80k": "80000",
-        "$90k": "90000",
-        "$120k": "120000",
-        "$250k": "250000"
-    }
+    "No Min": None,
+    "$500k": "500000",
+    "$600k": "600000",
+    "$700k": "700000",
+    "$800k": "800000",
+     
+     
+}
+
+    # max_price_display_map = {
+    #     "No Max": None,
+    #     "$90k": "90000",
+    #     "$1M": "1000000",
+    #     "$1.2M": "1200000",
+    #     "$1.25M": "1250000"
+    # }
 
     max_price_display_map = {
         "No Max": None,
-        "$90k": "90000",
+        "$900k": "900000",
         "$1M": "1000000",
         "$1.2M": "1200000",
         "$1.25M": "1250000"
@@ -114,7 +240,7 @@ with st.form("user_form"):
     # --- Construct Final URL ---
     final_url = f"{property_type_url}{price_reduced_url}{days_url}{price_filter}{sort_url}"
     # url = f"https://www.realtor.com/realestateandhomes-search/{location}"
-    st.markdown(f"**Generated URL Path:** `https://www.realtor.com/realestateandhomes-search/{location}{final_url}`")
+    st.markdown(f"**Generated URL Path:** `https://www.realtor.com/realestateandhomes-search/{label_to_value[selected_label]}{final_url}`")
 
     submitted = st.form_submit_button("Search")
 
@@ -126,7 +252,8 @@ if submitted:
         input_path="python_notebook.ipynb",
         output_path=output_path,
         parameters={
-            "location": location,
+            # "location": location,
+            "location": label_to_value[selected_label],
             "final_url":final_url
             # "property_type": property_type,
             # "days": days,
