@@ -380,7 +380,9 @@ if not st.session_state.checked_token:
 # ---------------- Profile Page (Scraper) ---------------- #
 if st.session_state.logged_in and st.session_state.page == "profile":
     name=storage.get("username")
-    st.success("Welcome , " + name + "!")   
+    if name:
+
+        st.success("Welcome , " + name + "!")   
     if st.button("Logout"):
         st.session_state.logged_in = False
         st.session_state.user_data = None
