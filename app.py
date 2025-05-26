@@ -331,7 +331,7 @@ import nbformat
 import pandas as pd
 from io import BytesIO
 import json
-from streamlit_js_eval import streamlit_js_eval 
+# from streamlit_js_eval import streamlit_js_eval 
 
 API_BASE_URL = "https://expresjs-authentication.onrender.com"
 storage = LocalStorage(key="auth_token")
