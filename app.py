@@ -321,6 +321,8 @@
 
 
 
+# ---------------------------------------------login authentication----------------------------------------------
+
 import streamlit as st
 import requests
 from streamlit_browser_storage import LocalStorage
@@ -333,13 +335,62 @@ from io import BytesIO
 import json
 # from streamlit_js_eval import streamlit_js_eval 
 
+# from streamlit_javascript import st_javascript
+
+ 
+
 API_BASE_URL = "https://expresjs-authentication.onrender.com"
 storage = LocalStorage(key="auth_token")
 
 st.set_page_config(page_title="Auth App", layout="centered")
 st.title("🛂 Authentication ")
 
-token = storage.get("token")
+# -----------------------------------------------
+import json
+from streamlit_javascript import st_javascript
+import streamlit as st
+from streamlit.components.v1 import html
+
+
+def get_token_from_local_storage():
+    return st_javascript("window.localStorage.getItem('token') || null")
+
+# def set_token_to_local_storage(token):
+     
+#     st_javascript("window.localStorage.setItem('token','kkkkk')" )
+ 
+def set_token_to_local_storage(token,username):
+    token_js = json.dumps(token)  # safely encode token as JS string
+    username_js = json.dumps(username)  # safely encode token as JS string
+    html_code = f"""
+    <script>
+    (function() {{
+        window.localStorage.setItem('token', {token_js});
+        window.localStorage.setItem('username', {username_js});
+        console.log('Token set in localStorage:', {token_js});
+    }})();
+    </script>
+    """
+    html(html_code)
+
+  
+
+def remove_token_from_local_storage():
+    st_javascript("window.localStorage.removeItem('token');")
+    st_javascript("window.localStorage.removeItem('username');")
+
+
+# print("get from localStorage:", get_token_from_local_storage())
+# print("Token from localStorage:", set_token_to_local_storage("shiiiiiiiiiiiiiiiiiiiiii"))
+# remove_token_from_local_storage()
+
+
+
+
+# ----------------------------------------------
+
+# token = storage.get("token")
+token =get_token_from_local_storage()
 
 if token:
     st.session_state.page = "profile"
@@ -377,6 +428,8 @@ def check_token():
 if not st.session_state.checked_token:
     check_token()
 
+
+ 
 # ---------------- Profile Page (Scraper) ---------------- #
 if st.session_state.logged_in and st.session_state.page == "profile":
     name=storage.get("username")
@@ -387,26 +440,27 @@ if st.session_state.logged_in and st.session_state.page == "profile":
         st.session_state.logged_in = False
         st.session_state.user_data = None
         st.session_state.token = None
-        storage = LocalStorage(key="auth_token")
+        # storage = LocalStorage(key="auth_token")
 
-        storage.delete("token")  # Properly delete the token key from browser storage
-        # storage.set("token","new")
-        vv=storage.get("token")
-        storage.delete("username")
-        print(vv)
-        components.html(
-            """
-            <script>
-                localStorage.removeItem("token");
-                localStorage.removeItem("auth_token");
-                localStorage.removeItem("username");
+        # storage.delete("token")  # Properly delete the token key from browser storage
+        # # storage.set("token","new")
+        # vv=storage.get("token")
+        # storage.delete("username")
+        # print(vv)
+        # components.html(
+        #     """
+        #     <script>
+        #         localStorage.removeItem("token");
+        #         localStorage.removeItem("auth_token");
+        #         localStorage.removeItem("username");
                  
-                window.location.reload();
-            </script>
-            """,
-            height=0,
-            scrolling=False,
-        )
+        #         window.location.reload();
+        #     </script>
+        #     """,
+        #     height=0,
+        #     scrolling=False,
+        # )
+        remove_token_from_local_storage()
 
         st.session_state.page = "login"
          
@@ -735,8 +789,10 @@ elif st.session_state.page == "login":
                     st.session_state.user_data = user
                     st.session_state.logged_in = True
                     st.session_state.page = "profile"
-                    storage.set("token", token)
-                    storage.set("username",user["username"])
+                    # storage.set("token", token)
+                    # storage.set("username",user["username"])
+                    set_token_to_local_storage(token , user["username"])
+ 
                     st.success("Logged in successfully!")
                     st.rerun()
                 else:
@@ -747,3 +803,6 @@ elif st.session_state.page == "login":
     if st.button("Go to Signup"):
         go_to("signup")
         st.rerun()
+
+
+ 
