@@ -337,8 +337,6 @@ import json
 
 # from streamlit_javascript import st_javascript
 
- 
-
 API_BASE_URL = "https://expresjs-authentication.onrender.com"
 storage = LocalStorage(key="auth_token")
 
@@ -387,14 +385,21 @@ def remove_token_from_local_storage():
 
 
 
-# ----------------------------------------------
+# ----------------------------------------------verification-------
 
 # token = storage.get("token")
 token =get_token_from_local_storage()
 
-# if token:
-#     st.session_state.page = "profile"
-#     st.session_state.logged_in = True
+if token:
+    # st.session_state.page = "profile"
+    # st.session_state.logged_in = True
+    headers = {"Authorization": f"Bearer {token}"}
+    response = requests.get(f"{API_BASE_URL}/verify", headers=headers)
+    # print("response is ",response.json())
+    if response.status_code == 200:
+        st.session_state.logged_in = True
+        st.session_state.user_data = response.json()
+        st.session_state.page = "profile"
 
 if "token" not in st.session_state:
     st.session_state.token = storage.get("token")
