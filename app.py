@@ -392,9 +392,9 @@ def remove_token_from_local_storage():
 # token = storage.get("token")
 token =get_token_from_local_storage()
 
-if token:
-    st.session_state.page = "profile"
-    st.session_state.logged_in = True
+# if token:
+#     st.session_state.page = "profile"
+#     st.session_state.logged_in = True
 
 if "token" not in st.session_state:
     st.session_state.token = storage.get("token")
@@ -411,12 +411,15 @@ def go_to(page_name):
     st.session_state.page = page_name
 
 def check_token():
-    token = st.session_state.get("token")
+    # token = st.session_state.get("token")
+    # token = get_token_from_local_storage()
+    # print("jjjjjjjjjj" ,token)
     if not token:
         return
     try:
         headers = {"Authorization": f"Bearer {token}"}
         response = requests.get(f"{API_BASE_URL}/verify", headers=headers)
+        # print("response is ",response.json())
         if response.status_code == 200:
             st.session_state.logged_in = True
             st.session_state.user_data = response.json()
