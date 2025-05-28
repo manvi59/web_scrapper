@@ -377,6 +377,7 @@ def set_token_to_local_storage(token,username):
 def remove_token_from_local_storage():
     st_javascript("window.localStorage.removeItem('token');")
     st_javascript("window.localStorage.removeItem('username');")
+    st_javascript("window.location.href = window.location.href;")
 
 
 # print("get from localStorage:", get_token_from_local_storage())
