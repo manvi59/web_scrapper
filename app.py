@@ -358,6 +358,7 @@ def get_token_from_local_storage():
 #     st_javascript("window.localStorage.setItem('token','kkkkk')" )
  
 def set_token_to_local_storage(token,username):
+    print("inside the function" , token , username)
     token_js = json.dumps(token)  # safely encode token as JS string
     username_js = json.dumps(username)  # safely encode token as JS string
     html_code = f"""
@@ -389,17 +390,17 @@ def remove_token_from_local_storage():
 
 # token = storage.get("token")
 token =get_token_from_local_storage()
-
+print("tokennnnn",token)
 if token:
-    # st.session_state.page = "profile"
-    # st.session_state.logged_in = True
-    headers = {"Authorization": f"Bearer {token}"}
-    response = requests.get(f"{API_BASE_URL}/verify", headers=headers)
-    # print("response is ",response.json())
-    if response.status_code == 200:
-        st.session_state.logged_in = True
-        st.session_state.user_data = response.json()
-        st.session_state.page = "profile"
+    st.session_state.page = "profile"
+    st.session_state.logged_in = True
+    # headers = {"Authorization": f"Bearer {token}"}
+    # response = requests.get(f"{API_BASE_URL}/verify", headers=headers)
+    # # print("response is ",response.json())
+    # if response.status_code == 200:
+    #     st.session_state.logged_in = True
+    #     st.session_state.user_data = response.json()
+    #     st.session_state.page = "profile"
 
 if "token" not in st.session_state:
     st.session_state.token = storage.get("token")
@@ -799,6 +800,7 @@ elif st.session_state.page == "login":
                     st.session_state.page = "profile"
                     # storage.set("token", token)
                     # storage.set("username",user["username"])
+                    print('-----------' , result)
                     set_token_to_local_storage(token , user["username"])
  
                     st.success("Logged in successfully!")
