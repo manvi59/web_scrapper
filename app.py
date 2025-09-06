@@ -393,7 +393,7 @@ def remove_token_from_local_storage():
 
 # token = storage.get("token")
 token =get_token_from_local_storage()
-print("tokennnnn",token)
+# print("tokennnnn",token)
 if token:
     # st.session_state.page = "profile"
     # st.session_state.logged_in = True
